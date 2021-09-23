@@ -1,0 +1,23 @@
+{
+  "name": "pop-chain",
+  "version": "1.0.0",
+  "description": "this my first blockchain chain",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "dev-test": "nodemon block-dev-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parthiban-selvaraj"
+  },
+  "author": "parthiban selvaraj",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.2.1",
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}
