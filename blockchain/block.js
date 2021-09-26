@@ -16,8 +16,10 @@ class Block {
         Data      : ${this.data}`;        
     }
     static genesis() {
-        const hash = SHA256(Date.now());
-        return new this(Date.now(), '---------', hash.toString(), []);
+        // changing this to static test. this will fail due non-deterministic time value
+        // const hash = SHA256(Date.now());
+        const hash = SHA256('Satoshi Nakamoto');
+        return new this('Genesis Time', '---------', hash.toString(), []);
     }
 
     static mineBlock(lastBlock, data) {
@@ -30,6 +32,11 @@ class Block {
 
     static hash(timestamp, lastHash, data) {
         return SHA256(`${timestamp}${lastHash}${data}`).toString();
+    }
+
+    static blockHash(block) {
+        const { timestamp, lastHash, data} = block;
+        return Block.hash(timestamp, lastHash, data);
     }
 }
 
