@@ -10,11 +10,17 @@
 
 // console.log(block.toString());
 
+// Test for display difficulty and Hash value
+// const Blockchain = require('./blockchain');
 
-const Blockchain = require('./blockchain');
+// const bc = new Blockchain();
 
-const bc = new Blockchain();
+// for (let i = 0; i < 10; i++) {
+//     console.log(bc.addBlock(`Block No: ${i}`).toString());
+// };
 
-for (let i = 0; i < 10; i++) {
-    console.log(bc.addBlock(`Block No: ${i}`).toString());
-};
+// test for displaying wallet
+const Wallet = require('./wallet');
+const wallet = new Wallet();
+
+console.log(wallet.toString());

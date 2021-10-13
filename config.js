@@ -4,5 +4,8 @@ const DIFFICULTY = 3;
 // in ideal case, every 3 seconds expecting a block 
 const MINE_RATE = 3000;
 
+// setting up global initial baqlance for all the accounts to initiate the transactions
+const INITIAL_BALANCE = 500;
+
 // ES6 convention to export an object
-module.exports = { DIFFICULTY, MINE_RATE };
+module.exports = { DIFFICULTY, MINE_RATE, INITIAL_BALANCE };
