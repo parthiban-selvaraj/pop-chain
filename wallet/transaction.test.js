@@ -22,7 +22,20 @@ describe('Test Transaction capabilities', () => {
     });
 
     it('outputs error message if given amount exceeds the wallet balance', () => {
-        amount = 50000;
+        amount = 5000;
         expect(Transaction.newTransaction(wallet, receiver, amount)).toEqual(`Amount : ${amount} exceeds balance`)
+    });
+
+    it('inputs the balance of wallet', () => {
+        expect(transaction.input.amount).toEqual(wallet.balance);
+    });
+
+    it('validates a valid transaction against its signature', () => {
+        expect(Transaction.verifyTransacion(transaction)).toBe(true);
+    });
+
+    it('invalidates a corrupt transaction', () => {
+        transaction.outputs[0].amount = 50000;
+        expect(Transaction.verifyTransacion(transaction)).toBe(false);
     });
 })

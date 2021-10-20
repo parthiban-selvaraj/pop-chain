@@ -20,7 +20,27 @@ class Transaction {
             { amount, address: receiver }
         ]);
 
+        Transaction.signTransaction(transaction, sender);
+
         return transaction;
+    }
+
+    static signTransaction(transaction, sender) {
+        transaction.input = {
+            timestamp : Date.now(),
+            amount : sender.balance,
+            address : sender.publicKey,
+            signature : sender.sign(ChainUtil.hash(transaction.outputs))
+        }
+    }
+
+    // for verify each transaction's signature with public key
+    static verifyTransacion(transaction) {
+        return ChainUtil.verifySignature(
+            transaction.input.address, 
+            transaction.input.signature,
+            ChainUtil.hash(transaction.outputs)
+        );
     }
 }
 

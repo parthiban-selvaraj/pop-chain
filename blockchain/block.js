@@ -1,4 +1,4 @@
-const SHA256 = require('crypto-js/sha256');
+const ChainUtil = require('../chain-util');
 const { DIFFICULTY, MINE_RATE } = require('../config');
 class Block {
     constructor(timestamp, lastHash, hash, data, nonce, difficulty) {
@@ -23,7 +23,7 @@ class Block {
     static genesis() {
         // changing this to static test. this will fail due non-deterministic time value
         // const hash = SHA256(Date.now());
-        const hash = SHA256('Satoshi Nakamoto');
+        const hash = ChainUtil.hash('Satoshi Nakamoto');
         return new this('Genesis Time', '---------', hash.toString(), [], 0, DIFFICULTY);
     }
 
@@ -49,7 +49,7 @@ class Block {
     }
 
     static hash(timestamp, lastHash, data, nonce, difficulty) {
-        return SHA256(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
+        return ChainUtil.hash(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
     }
 
     static blockHash(block) {

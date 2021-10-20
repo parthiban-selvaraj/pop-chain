@@ -13,6 +13,12 @@ class Wallet {
             Public Key  : ${this.publicKey.toString()}
             Balance     : ${this.balance}`
     }
+
+    // for signing each transaction input with private key
+    sign(dataHash) {
+        return this.keyPair.sign(dataHash);
+    }
+
 }
 
 module.exports = Wallet;

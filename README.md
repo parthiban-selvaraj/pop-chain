@@ -5,3 +5,4 @@
 <p> Dynamically added difficulty adjustments for given MINE_RATE of 3 secs</p>
 <p> Added wallets and Key pair generation feature for transactions </P>
 <p> Added transaction object with basic validations </p>
+<p> Added sign and verify transaction features </p>
