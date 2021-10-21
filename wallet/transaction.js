@@ -7,11 +7,28 @@ class Transaction {
         this.outputs = [];
     }
 
+    update(sender, receiver, amount) {
+        const senderOutput = this.outputs.find(output => output.address === sender.publicKey);
+
+        // transaction amount should not be greater than sender wallet balance
+        if (amount > senderOutput.amount) {
+            console.log(`Amount : ${amount} exceeds balance`);
+            return `Amount: ${amount} exceeds the balance`;
+        }
+
+        senderOutput.amount = senderOutput.amount - amount;
+        this.outputs.push({ amount, address: receiver});
+        Transaction.signTransaction(this, sender);
+
+        return this;
+    }
+
     static newTransaction(sender, receiver, amount) {
         // initialize transaction object by calling contructor
         const transaction = new this();
         
         if (amount > sender.balance) {
+            console.log(`Amount : ${amount} exceeds balance`);
             return `Amount : ${amount} exceeds balance`;
         }
         // spread operation - pushes elements one by one

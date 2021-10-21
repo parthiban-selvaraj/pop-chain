@@ -6,3 +6,4 @@
 <p> Added wallets and Key pair generation feature for transactions </P>
 <p> Added transaction object with basic validations </p>
 <p> Added sign and verify transaction features </p>
+<p> Can user update a transaction and add or update it in trnsaction pool </p>

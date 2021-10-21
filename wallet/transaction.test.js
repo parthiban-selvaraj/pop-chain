@@ -1,3 +1,4 @@
+const { tSEnumDeclaration } = require('@babel/types');
 const Wallet = require('./index');
 const Transaction = require('./transaction');
 
@@ -37,5 +38,25 @@ describe('Test Transaction capabilities', () => {
     it('invalidates a corrupt transaction', () => {
         transaction.outputs[0].amount = 50000;
         expect(Transaction.verifyTransacion(transaction)).toBe(false);
+    });
+
+    describe('additional test suite for update function in Transaction', () => {
+        let nextAmount, nextReceiver;
+
+        beforeEach(() => {
+            nextAmount = 20;
+            nextReceiver = 'n3xt-4ddr355';
+            transaction = transaction.update(wallet, nextReceiver, nextAmount);
+        });
+
+        it('subtracts the next amount from sender\'s output', () => {
+            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
+                .toEqual(wallet.balance - amount - nextAmount);
+        });
+
+        it('outputs an amount for the next receiver', () => {
+            expect(transaction.outputs.find(output => output.address === nextReceiver).amount)
+                .toEqual(nextAmount);
+        });
     });
 })
