@@ -14,6 +14,11 @@ class TransactionPool {
             this.transactions.push(transaction);
         }
     }
+
+    // return if transaction already exists  
+    existingTransaction(address) {
+        return this.transactions.find(txn => txn.input.address === address);
+    }
 }
 
 module.exports = TransactionPool;

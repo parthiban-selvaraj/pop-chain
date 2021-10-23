@@ -25,5 +25,5 @@ describe('Testing Transaction Pool functionalities', () => {
         console.log(JSON.stringify(tPool.transactions.find(txn => txn.id === newTransaction.id)));
         expect(JSON.stringify(tPool.transactions.find(txn => txn.id === newTransaction.id)))
             .not.toEqual(oldTransaction);
-    })
-})
+    });
+});

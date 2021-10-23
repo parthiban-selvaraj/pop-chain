@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Blockchain = require('../blockchain');
 const P2pServer = require('./p2p-server');
+const Wallet = require('../wallet');
+const TransactionPool = require('../wallet/transaction-pool');
 
 //  either use value of HTTP_PORT cmd variable from cmd or default one 40001
 //  e.g $ HTTP_PORT=8001 npm run dev
@@ -9,8 +11,10 @@ const HTTP_PORT = process.env.HTTP_PORT || 4001;
 
 const app = express();
 const bc = new Blockchain();
+const wallet = new Wallet();
+const tPool = new TransactionPool();
 // creating P2P server object and sending above blockchain object
-const p2pServer = new P2pServer(bc);
+const p2pServer = new P2pServer(bc, tPool);
 
 // app.use(bodyParser.json());
 // app.use(express.bodyParser.json());
@@ -37,6 +41,25 @@ app.post('/mineBlock', (req, res) => {
     p2pServer.syncChains();
 
     res.redirect('/blocks');
+});
+
+app.post('/transaction', (req, res) => {
+    const { receiver, amount } = req.body;
+
+    const transaction = wallet.createTransaction(receiver, amount, tPool);
+    // broadcast created transaction to all peers via sockets
+    p2pServer.broadcastTransaction(transaction);
+    res.redirect('/transactions');
+})
+
+// for getting all the transactions from transaction pool
+app.get('/transactions', (req, res) => {
+    res.json(tPool.transactions);
+});
+
+// for retriveing own public key address
+app.get('/public-key', (req, res) => {
+    res.json({ publicKey : wallet.publicKey });
 })
 
 app.listen(HTTP_PORT, () => {
@@ -44,3 +67,6 @@ app.listen(HTTP_PORT, () => {
 });
 
 p2pServer.listen();
+
+// command for connecting another peer
+// HTTP_PORT=4002 P2P_PORT=5002 PEERS=ws://localhost:5001
