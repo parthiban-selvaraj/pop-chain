@@ -25,7 +25,7 @@ class Wallet {
     createTransaction(receiver, amount, transactionPool) {
         if (amount > this.balance) {
             console.log(`Amount ${amount} exceeds the wallet balance ${this.balance}`);
-            return `Amount ${amount} exceeds the wallet balance ${this.balance}`;
+            return;
         }
 
         // check txn already exists in pool or not
@@ -39,6 +39,13 @@ class Wallet {
         }
 
         return transaction;
+    }
+
+    static blockchainWallet() {
+        const blockchainWallet = new this();
+        blockchainWallet.address = 'blockchain-wallet';
+
+        return blockchainWallet;
     }
 
 }

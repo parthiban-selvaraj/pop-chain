@@ -8,3 +8,4 @@
 <p> Added sign and verify transaction features </p>
 <p> Can user update a transaction and add or update it in trnsaction pool </p>
 <p> Added API endpoints for POST and GET transactions with braodcast feature </p>
+<p> Added Mine endpoint and enablabed Block Mining and rewarding </p>

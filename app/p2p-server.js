@@ -9,7 +9,8 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 // message types included to differenciate sockets are handling chain(block) or transaction pool
 const MESSAGE_TYPES = {
     chain : 'CHAIN',
-    transaction: 'TRANSACTION'
+    transaction: 'TRANSACTION',
+    clear_transactions : 'CLEAR_TRANSACTION'
 };
 
 class P2pServer {
@@ -64,6 +65,10 @@ class P2pServer {
                 case MESSAGE_TYPES.transaction:
                     this.transactionPool.updateOrAddTransaction(data.transaction);
                     break;
+
+                case MESSAGE_TYPES.clear_transactions:
+                    this.transactionPool.clear();
+                    break;
             }
 
             // console.log('data', data);
@@ -94,6 +99,13 @@ class P2pServer {
     // broadcast transaction to all the peers thus making transaction pool as common
     broadcastTransaction(transaction) {
         this.sockets.forEach(socket => this.sendTransaction(socket, transaction));
+    }
+
+    // broadcast clear transaction to all peers
+    broadcastClearTransactions() {
+        this.sockets.forEach(socket => socket.send(JSON.stringify({
+            type: MESSAGE_TYPES.clear_transactions
+        })));
     }
 }
 

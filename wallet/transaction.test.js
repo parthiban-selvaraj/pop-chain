@@ -1,4 +1,6 @@
 const { tSEnumDeclaration } = require('@babel/types');
+const { MINING_REWARD } = require('../config');
+const { blockchainWallet } = require('./index');
 const Wallet = require('./index');
 const Transaction = require('./transaction');
 
@@ -24,7 +26,7 @@ describe('Test Transaction capabilities', () => {
 
     it('outputs error message if given amount exceeds the wallet balance', () => {
         amount = 5000;
-        expect(Transaction.newTransaction(wallet, receiver, amount)).toEqual(`Amount : ${amount} exceeds balance`)
+        expect(Transaction.newTransaction(wallet, receiver, amount)).toEqual(undefined);
     });
 
     it('inputs the balance of wallet', () => {
@@ -59,4 +61,15 @@ describe('Test Transaction capabilities', () => {
                 .toEqual(nextAmount);
         });
     });
-})
+
+    describe('creating a reward transaction', () => {
+        beforeEach(() => {
+            transaction = Transaction.rewardTransaction(wallet, Wallet.blockchainWallet());
+        });
+
+        it('reward miner\'s wallet', () => {
+            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
+                .toEqual(MINING_REWARD);
+        });
+    });
+});

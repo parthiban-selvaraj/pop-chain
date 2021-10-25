@@ -7,5 +7,7 @@ const MINE_RATE = 3000;
 // setting up global initial baqlance for all the accounts to initiate the transactions
 const INITIAL_BALANCE = 500;
 
+const MINING_REWARD = 50;
+
 // ES6 convention to export an object
-module.exports = { DIFFICULTY, MINE_RATE, INITIAL_BALANCE };
+module.exports = { DIFFICULTY, MINE_RATE, INITIAL_BALANCE, MINING_REWARD };

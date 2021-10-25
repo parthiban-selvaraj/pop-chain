@@ -1,4 +1,5 @@
 const ChainUtil = require('../chain-util');
+const { MINING_REWARD } = require('../config');
 
 class Transaction {
     constructor() {
@@ -13,7 +14,7 @@ class Transaction {
         // transaction amount should not be greater than sender wallet balance
         if (amount > senderOutput.amount) {
             console.log(`Amount : ${amount} exceeds balance`);
-            return `Amount: ${amount} exceeds the balance`;
+            return;
         }
 
         senderOutput.amount = senderOutput.amount - amount;
@@ -23,23 +24,34 @@ class Transaction {
         return this;
     }
 
-    static newTransaction(sender, receiver, amount) {
+    static transactionWithOutputs(sender, outputs) {
         // initialize transaction object by calling contructor
         const transaction = new this();
-        
+
+        // spread operation - pushes elements one by one
+        transaction.outputs.push(...outputs);
+        Transaction.signTransaction(transaction, sender);
+        return transaction;
+    }
+
+    static newTransaction(sender, receiver, amount) {
         if (amount > sender.balance) {
             console.log(`Amount : ${amount} exceeds balance`);
-            return `Amount : ${amount} exceeds balance`;
+            return;
         }
-        // spread operation - pushes elements one by one
-        transaction.outputs.push(...[
+
+        return Transaction.transactionWithOutputs(sender, [
             { amount : sender.balance - amount, address : sender.publicKey },
             { amount, address: receiver }
         ]);
+    }
 
-        Transaction.signTransaction(transaction, sender);
-
-        return transaction;
+    // minning reward which will be initiated from special wallet assigned to blockchain system
+    // this reward transaction will not have multiple output objects (i.e deduction result object in output)
+    static rewardTransaction(miner, blockchainWallet) {
+        return Transaction.transactionWithOutputs(blockchainWallet, [{
+            amount : MINING_REWARD, address : miner.publicKey
+        }]);
     }
 
     static signTransaction(transaction, sender) {

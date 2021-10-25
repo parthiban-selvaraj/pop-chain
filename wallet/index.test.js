@@ -36,7 +36,7 @@ describe('testing wallet functionalities', () => {
             it('return balance exceeds message when amount > balance', () => {
                 sendAmount = 501;
                 expect(wallet.createTransaction(receiver, sendAmount, tPool))
-                    .toEqual(`Amount ${sendAmount} exceeds the wallet balance ${wallet.balance}`);
+                    .toEqual(undefined);
             });
         });
     });
