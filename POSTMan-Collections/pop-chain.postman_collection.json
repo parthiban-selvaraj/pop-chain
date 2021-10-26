@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "4ead64db-b726-4e3f-99a1-e993fbe39c65",
 		"name": "pop-chain",
+		"description": "<p> start with /public-key </p>\nthen use POST /transaction to submit transaction",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -79,12 +80,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4001/transactions",
+					"raw": "http://localhost:4002/transactions",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4001",
+					"port": "4002",
 					"path": [
 						"transactions"
 					]
@@ -144,7 +145,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"receiver\" : \"peer2_4dr355\",\r\n    \"amount\" : 150\r\n}",
+					"raw": "{\r\n    \"receiver\" : \"04c96ddf35a54c1bc0c743d5029d90d10fd69a664b7c9f09cb0ab6cf6a01398e38b50d97c7955fdb47738fcf67d8e007ee6ae77e7113ad20af3a93dbdf91793d4f\",\r\n    \"amount\" : 30\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -152,12 +153,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4002/transaction",
+					"raw": "http://localhost:4001/transaction",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4002",
+					"port": "4001",
 					"path": [
 						"transaction"
 					]
@@ -248,14 +249,45 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4001/public-key",
+					"raw": "http://localhost:4002/public-key",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"public-key"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mine BLock",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4001/mine-transaction",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4001",
 					"path": [
-						"public-key"
+						"mine-transaction"
 					]
 				}
 			},

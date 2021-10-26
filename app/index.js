@@ -49,7 +49,7 @@ app.post('/mineBlock', (req, res) => {
 app.post('/transaction', (req, res) => {
     const { receiver, amount } = req.body;
 
-    const transaction = wallet.createTransaction(receiver, amount, tPool);
+    const transaction = wallet.createTransaction(receiver, amount, bc, tPool);
     // broadcast created transaction to all peers via sockets
     p2pServer.broadcastTransaction(transaction);
     res.redirect('/transactions');

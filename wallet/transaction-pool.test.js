@@ -2,16 +2,18 @@ const TransactionPool = require('./transaction-pool');
 const Transaction = require('./transaction');
 const Wallet = require('./index');
 const { isTaggedTemplateExpression, exportAllDeclaration } = require('@babel/types');
+const Blockchain = require('../blockchain');
 
 describe('Testing Transaction Pool functionalities', () => {
-    let tPool, wallet, transaction;
+    let tPool, wallet, transaction, bc;
 
     beforeEach(() => {
         tPool = new TransactionPool();
         wallet = new Wallet();
+        bc = new Blockchain();
         // transaction = Transaction.newTransaction(wallet, 'r4nd-4dr355', 30);
         // tPool.updateOrAddTransaction(transaction);
-        transaction = wallet.createTransaction('r4nd-4dr355', 30, tPool);
+        transaction = wallet.createTransaction('r4nd-4dr355', 30, bc, tPool);
     });
 
     it('adds transaction to transaction pool', () => {
@@ -41,7 +43,7 @@ describe('Testing Transaction Pool functionalities', () => {
             // alternate transactions will have corrupted values
             for (let i=0; i < 6; i++ ) {
                 wallet = new Wallet();
-                transaction = wallet.createTransaction('r4nd-4dr355', 30, tPool);
+                transaction = wallet.createTransaction('r4nd-4dr355', 30, bc, tPool);
 
                 if (i%2 == 0) {
                     // corrupting even numbered transaction with huge input amount 
