@@ -10,10 +10,10 @@
 <p> Added API endpoints for POST and GET transactions with braodcast feature </p>
 <p> Added Mine endpoint and enablabed Block Mining and rewarding </p>
 <p> Added wallet balance calculation and endpoint for the same </p>
-<p> <ol> Next Steps
+<ol> Next Steps
     <li> GET request for getting wallet balance '/balance' </li>
     <li> Add transaction fee for each user and include collective fees to miner </li>
     <li> Build userinterfaces </li>
     <li> add confirmed and unconfirmed status to transactions and create sub set in txn pool </li>
     <li> create dedicated server for reward transactions for security reasons </li>
-</ol> </p>
+</ol>
